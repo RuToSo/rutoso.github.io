@@ -1,6 +1,6 @@
 # apps.rutoso.de
 
-Öffentliche Seite und Update-Quelle von **RuToSo Apps** (öffentlicher AppStore).
+Öffentliche Seite und Update-Quelle des **RuToSo-AppStores**.
 Es gibt keine Liste zum Pflegen: Webseite und AppStore lesen direkt die Ordner unter `apps/`.
 
 ## Aufbau
@@ -8,11 +8,11 @@ Es gibt keine Liste zum Pflegen: Webseite und AppStore lesen direkt die Ordner u
 ```
 apps/
 ├── AppStore/                 ← der AppStore selbst (oben auf der Seite groß, aktualisiert sich hieraus)
-│   ├── RuToSo-Apps-1.0.0.apk
+│   ├── RuToSo-AppStore-2.0.0.apk
 │   ├── icon.png
 │   ├── beschreibung.txt
 │   ├── neuigkeiten.txt
-│   └── package.txt           (de.rutoso.appstore.oeffentlich – nicht ändern)
+│   └── package.txt           (de.rutoso.appstore2 – nicht ändern)
 ├── Main/                     ← Startseite
 │   └── DocuVault/
 │       ├── DocuVault-1.2.0.apk

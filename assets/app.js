@@ -3,7 +3,7 @@
    apps/AppStore = der AppStore selbst (wird oben groß angeboten). */
 (async function () {
   const OWNER = 'rutoso', REPO = 'rutoso.github.io', BRANCH = 'main', BASE = 'apps';
-  const STORE = 'AppStore', STORE_NAME = 'RuToSo Apps';
+  const STORE = 'AppStore', STORE_NAME = 'RuToSo-AppStore';
   const RESERVIERT = ['seite 2', 'rts', 'dev', STORE.toLowerCase()];
 
   const haupt = document.getElementById('haupt');

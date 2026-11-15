@@ -1,5 +1,5 @@
-## 1.0.0 – 15.11.2026
-- Neu: Erste öffentliche Version von RuToSo Apps
+## 2.0.0 – 15.11.2026
+- Neu: Neuer RuToSo-AppStore: Apps und Updates jetzt von GitHub statt Google Drive
 - Neu: Apps und Updates kommen direkt von apps.rutoso.de, ohne Anmeldung
 - Neu: Privater Bereich mit persönlichem Schlüssel (QR-Code), gleich benannte Bereiche werden zusammengelegt
 - Neu: Warnung, bevor der Schlüssel abläuft
