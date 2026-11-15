@@ -1,0 +1,1 @@
+Installiert und aktualisiert alle RuToSo-Apps an einem Ort. Zeigt neue Versionen an und fragt vor jedem Update nach. Ohne Konto, ohne Werbung.

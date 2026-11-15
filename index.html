@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RuToSo Apps</title>
+<link rel="icon" href="assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+<header class="kopf"><div class="kopf-inhalt">
+  <a href="index.html"><img src="assets/logo.svg" alt="RuToSo"></a>
+  <div><h1>RuToSo Apps</h1><p>Kleine Android-Apps aus eigener Werkstatt. Kostenlos, ohne Werbung, ohne Konto.</p></div>
+</div></header>
+<main>
+  <section class="haupt" id="haupt" aria-live="polite">
+    <p class="hinweis">AppStore wird geladen …</p>
+  </section>
+  <section class="einzeln">
+    <h2>Alle Apps einzeln</h2>
+    <p class="hinweis">Lieber nur eine bestimmte App? Hier gibt es jede auch direkt. Mit dem AppStore bekommst du allerdings automatisch Bescheid über Updates.</p>
+    <div id="liste" aria-live="polite"></div>
+  </section>
+</main>
+<footer class="fuss">
+  <span>© RuToSo</span>
+  <a href="index.html">Apps</a>
+  <a href="anleitung.html">Installationsanleitung</a>
+  <a href="datenschutz.html">Datenschutz</a>
+</footer>
+<dialog id="installhilfe" class="hilfe" aria-labelledby="hilfe-titel">
+  <h2 id="hilfe-titel">So geht es weiter mit <span class="app-name">der App</span></h2>
+  <div class="nur-android">
+    <ol>
+      <li>Warte, bis der Download fertig ist, und tippe in der Benachrichtigung auf <b>Öffnen</b>.</li>
+      <li>Fragt Android nach <b>„Unbekannte Apps installieren“</b>: auf <b>Einstellungen</b> tippen, für den Browser erlauben und zurückgehen.</li>
+      <li>Samsung-Handy? Vorher die <b>Automatische Sperre</b> ausschalten, sonst wird die Installation still blockiert:</li>
+    </ol>
+    <p class="kasten">Einstellungen › Sicherheit und Datenschutz › Automatische Sperre › Aus</p>
+    <ol start="4">
+      <li>Auf <b>Installieren</b> tippen. Meldet Play Protect eine Warnung: <b>Weitere Details › Trotzdem installieren</b>.</li>
+    </ol>
+  </div>
+  <div class="nur-pc" hidden>
+    <p>Die Datei ist für Android-Handys. Am einfachsten öffnest du apps.rutoso.de direkt auf dem Handy und lädst sie dort herunter.</p>
+  </div>
+  <p><a href="anleitung.html">Ausführliche Anleitung</a></p>
+  <button type="button" class="schliessen laden">Verstanden</button>
+</dialog>
+<script src="assets/app.js"></script>
+</body></html>

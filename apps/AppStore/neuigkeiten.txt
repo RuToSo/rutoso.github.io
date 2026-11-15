@@ -1,0 +1,6 @@
+## 1.0.0 – 15.11.2026
+- Neu: Erste öffentliche Version von RuToSo Apps
+- Neu: Apps und Updates kommen direkt von apps.rutoso.de, ohne Anmeldung
+- Neu: Privater Bereich mit persönlichem Schlüssel (QR-Code), gleich benannte Bereiche werden zusammengelegt
+- Neu: Warnung, bevor der Schlüssel abläuft
+- Neu: Schloss-Symbol an privaten Apps
