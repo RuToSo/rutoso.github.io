@@ -1,3 +1,10 @@
+## 2.1.0 – 16.11.2026
+- Neu: Beliebig viele Quellen verbinden – private Repos mit Schlüssel, öffentliche ohne
+- Neu: Reihenfolge der Quellen festlegen; bei gleicher Version gewinnt die obere
+- Neu: Öffentliche RuToSo-Apps lassen sich ausblenden, z. B. für ein eigenes System
+- Neu: Fremde Repos dürfen ihre Apps auch im Ordner „apps“ ablegen
+- Verbessert: Warnungen zu Schlüsseln gelten jetzt für jede Quelle einzeln
+
 ## 2.0.0 – 15.11.2026
 - Neu: Neuer RuToSo-AppStore: Apps und Updates jetzt von GitHub statt Google Drive
 - Neu: Apps und Updates kommen direkt von apps.rutoso.de, ohne Anmeldung
