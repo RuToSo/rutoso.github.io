@@ -1,0 +1,6 @@
+## 1.0.0 – 17.11.2026
+- Neu: Erste Version von Norrsken
+- Neu: Polarlicht-Aussichten mit aktuellem Kp-Index und Bewölkung für deinen Standort
+- Neu: Polarlicht-Alarm, wenn die Chancen steigen
+- Neu: Sternenhimmel mit Sternbildern und Planeten
+- Neu: Überflüge der Raumstation ISS mit Uhrzeit und Richtung
