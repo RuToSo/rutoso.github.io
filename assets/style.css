@@ -99,3 +99,10 @@ details pre{white-space:pre-wrap;font:inherit;margin:.5rem 0 0;color:var(--text)
 .sw{font-weight:700}
 .sw-neu{color:#1C7A3E}.sw-verbessert,.sw-geaendert{color:var(--blau-tief)}.sw-behoben{color:#B45309}.sw-entfernt,.sw-wichtig{color:#B42318}.sw-hinweis{color:var(--leise)}
 @media (prefers-color-scheme:dark){.sw-neu{color:#6FD39A}.sw-behoben{color:#F5B25C}.sw-entfernt,.sw-wichtig{color:#FF8A80}}
+
+/* Weg zurück zu rutoso.de: kleiner Link oben links im Kopf (wie der Sprachumschalter auf rutoso.de, nur links) */
+.zur-hauptseite{position:absolute;z-index:2;top:.7rem;left:max(1.25rem,calc((100% - 60rem)/2 + 1.25rem));margin-left:-.5rem;
+  color:#fff;text-decoration:none;font-size:.85rem;opacity:.85;padding:.1rem .5rem;border-radius:.4rem}
+.zur-hauptseite:hover,.zur-hauptseite:focus-visible{opacity:1;background:rgba(255,255,255,.15)}
+.zur-hauptseite ~ .kopf-inhalt{padding-top:3rem}
+@media (max-width:40rem){.zur-hauptseite ~ .kopf-inhalt{padding-top:2.8rem}}
