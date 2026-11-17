@@ -16,7 +16,7 @@
 <main class="schritte">
   <h2>Anbieter</h2>
   <p>Angaben nach § 18 Abs. 1 Medienstaatsvertrag (MStV):</p>
-  <p class="kasten">Rune Torbjörn Sonneborn<br>Zum Dastloch 3<br>57339 Erndtebrück<br>E-Mail: <a href="mailto:info@rutoso.de">info@rutoso.de</a></p>
+  <p class="kasten">Rune Torbjörn Sonneborn<br>Zum Dastloch 3<br>57339 Erndtebrück<br>E-Mail: <a class="mail" data-u="kontakt" data-d="rutoso.de">kontakt [at] rutoso.de</a></p>
   <p>RuToSo ist ein privates, nicht kommerzielles Projekt. Es werden keine Waren oder Dienstleistungen gegen Entgelt angeboten.</p>
 
   <h2>Haftung für Inhalte</h2>
@@ -43,4 +43,5 @@
   <a href="datenschutz.html">Datenschutz</a>
   <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
 </footer>
+<script>document.querySelectorAll('.mail').forEach(function(e){var a=e.dataset.u+'@'+e.dataset.d;e.textContent=a;if(e.tagName==='A')e.href='mailto:'+a})</script>
 </body></html>

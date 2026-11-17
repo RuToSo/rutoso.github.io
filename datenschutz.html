@@ -15,7 +15,7 @@
 </div></header>
 <main class="schritte">
   <h2>1. Verantwortlich</h2>
-  <p class="kasten">Rune Torbjörn Sonneborn<br>Zum Dastloch 3<br>57339 Erndtebrück<br>E-Mail: <a href="mailto:info@rutoso.de">info@rutoso.de</a></p>
+  <p class="kasten">Rune Torbjörn Sonneborn<br>Zum Dastloch 3<br>57339 Erndtebrück<br>E-Mail: <a class="mail" data-u="kontakt" data-d="rutoso.de">kontakt [at] rutoso.de</a></p>
 
   <h2>2. Kurz gesagt</h2>
   <p>RuToSo ist ein privates Projekt ohne Werbung, ohne Tracking und ohne Konto bei mir. Die Apps speichern deine Daten auf deinem Handy oder in deinem eigenen Cloud-Speicher. Ich selbst erhalte keine Daten aus deinen Apps.</p>
@@ -28,7 +28,7 @@
   <p>Diese Seite setzt keine Cookies, nutzt keine Analyse- oder Werbedienste und lädt keine Schriften oder Inhalte von Drittanbietern.</p>
 
   <h2>5. Kontakt per E-Mail</h2>
-  <p>Schreibst du mir an info@rutoso.de, verarbeite ich deine Adresse und den Inhalt nur, um zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Ist die Sache erledigt, lösche ich die Nachricht, sofern du nichts anderes wünschst.</p>
+  <p>Schreibst du mir an <span class="mail" data-u="kontakt" data-d="rutoso.de">kontakt [at] rutoso.de</span>, verarbeite ich deine Adresse und den Inhalt nur, um zu antworten (Art. 6 Abs. 1 lit. f DSGVO). Ist die Sache erledigt, lösche ich die Nachricht, sofern du nichts anderes wünschst.</p>
 
   <h2>6. Der RuToSo-AppStore</h2>
   <p>Der AppStore fragt beim Start und einmal am Tag bei GitHub (api.github.com, raw.githubusercontent.com) nach, welche Apps und Versionen es gibt, und lädt Updates von dort. Dabei werden keine persönlichen Daten übertragen; GitHub sieht wie bei jedem Abruf die IP-Adresse. Persönliche Schlüssel für private Bereiche werden nur verschlüsselt auf deinem Handy gespeichert. QR-Codes liest der Scanner der Google-Play-Dienste direkt auf dem Gerät.</p>
@@ -58,4 +58,5 @@
   <a href="datenschutz.html">Datenschutz</a>
   <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
 </footer>
+<script>document.querySelectorAll('.mail').forEach(function(e){var a=e.dataset.u+'@'+e.dataset.d;e.textContent=a;if(e.tagName==='A')e.href='mailto:'+a})</script>
 </body></html>
