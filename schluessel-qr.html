@@ -25,6 +25,7 @@ button{font:inherit;font-weight:600;background:var(--blau);color:#fff;border:0;b
 <main>
   <h1>Schlüssel-QR für den privaten Bereich</h1>
   <p class="kasten">Diese Seite läuft nur in deinem Browser. Der Schlüssel wird nirgendwohin geschickt. Seite danach schließen.</p>
+  <p class="hinweis">Wie du Repo und Schlüssel anlegst, steht in der <a href="anleitung.html#eigenes-repo">Anleitung</a>.</p>
   <label for="repo">Privates Repo</label>
   <input id="repo" placeholder="z. B. rutoso/test" autocomplete="off" spellcheck="false">
   <label for="branch">Branch</label>
@@ -2354,7 +2355,7 @@ document.getElementById('los').addEventListener('click', () => {
   q.addData(`RUTOSO1|${repo}|${branch}|${token}`);
   q.make();
   qr.innerHTML = q.createSvgTag({cellSize: 6, margin: 4, scalable: false});
-  unter.textContent = (name ? `Für ${name}. ` : '') + 'Im RuToSo-AppStore: Einstellungen › Privater Bereich › QR-Code scannen.';
+  unter.textContent = (name ? `Für ${name}. ` : '') + 'Im RuToSo-AppStore: Einstellungen › Quellen › QR-Code scannen.';
 });
 </script>
 </body></html>
