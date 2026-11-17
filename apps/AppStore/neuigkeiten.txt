@@ -1,3 +1,7 @@
+## 2.1.1 – 17.11.2026
+- Verbessert: Ist ein verbundenes Repo beim Abgleich kurz nicht erreichbar, bleiben seine Apps sichtbar
+- Verbessert: Gilt auch für die tägliche Prüfung im Hintergrund; bei gesperrtem Schlüssel verschwinden die Apps wie bisher
+
 ## 2.1.0 – 16.11.2026
 - Neu: Beliebig viele Quellen verbinden – private Repos mit Schlüssel, öffentliche ohne
 - Neu: Reihenfolge der Quellen festlegen; bei gleicher Version gewinnt die obere
