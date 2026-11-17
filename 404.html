@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nicht gefunden – RuToSo-Apps</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="/assets/favicon-32.png" sizes="32x32">
+<link rel="apple-touch-icon" href="/assets/icon-192.png">
+<link rel="stylesheet" href="/assets/style.css">
+<style>
+.nf-text{max-width:42rem}
+.nf-text p{margin:.4rem 0}
+.spiel{margin-top:2rem;background:var(--flaeche);border:1px solid var(--linie);border-radius:1rem;padding:1.25rem}
+.spiel h2{margin:0 0 .3rem;font-size:1.15rem}
+.spiel>p{margin:0 0 1rem;color:var(--leise)}
+.buehne{position:relative;max-width:40rem;margin:0 auto}
+#feld{display:block;width:100%;aspect-ratio:4/3;max-height:70vh;border-radius:.8rem;background:var(--nacht);touch-action:none;cursor:none}
+.anzeige{display:flex;justify-content:space-between;max-width:40rem;margin:.6rem auto 0;color:var(--leise);font-size:.9rem;font-variant-numeric:tabular-nums}
+.schicht{position:absolute;inset:0;display:grid;place-items:center;text-align:center;padding:1rem;border-radius:.8rem;background:rgba(14,36,64,.82);color:#fff}
+.schicht[hidden]{display:none}
+.schicht h3{margin:0 0 .4rem;font-size:1.3rem}
+.schicht p{margin:0 0 1rem;opacity:.9}
+.schicht .knoepfe{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap}
+.schicht button{font:inherit;cursor:pointer;border:0}
+.schicht .zweit{background:none;color:#fff;text-decoration:underline;padding:.75rem .5rem}
+</style>
+</head>
+<body>
+<header class="kopf"><a class="zur-hauptseite" href="https://rutoso.de">← rutoso.de</a><div class="kopf-inhalt">
+  <a href="/index.html"><img src="/assets/logo.svg" alt="RuToSo"></a>
+  <div><h1>Nicht gefunden</h1><p>Diese Seite gibt es leider nicht.</p></div>
+</div></header>
+<main>
+  <div class="nf-text">
+    <p>Vielleicht hat sich die Adresse geändert, oder die App liegt inzwischen woanders.</p>
+    <p><a href="/index.html">Zu allen Apps →</a></p>
+  </div>
+
+  <section class="spiel" aria-labelledby="spiel-titel">
+    <h2 id="spiel-titel">Kleine Pause? Fang die Updates.</h2>
+    <p>Fang mit dem AppStore 20 App-Updates und weiche den Käfern aus. Steuern mit Maus, Finger oder den Pfeiltasten.</p>
+    <div class="buehne">
+      <canvas id="feld" width="640" height="480" aria-label="Spielfeld: Updates fangen, Käfern ausweichen"></canvas>
+      <div class="schicht" id="start">
+        <div><h3>Update-Fänger</h3><p>20 Updates fangen, 3 Käfer und es ist vorbei.</p>
+        <div class="knoepfe"><button type="button" class="laden" id="los">Spiel starten</button></div></div>
+      </div>
+      <div class="schicht" id="sieg" hidden>
+        <div><h3>Alle Updates installiert!</h3><p id="sieg-text"></p>
+        <div class="knoepfe"><a class="laden" href="/index.html">Zum AppStore</a><button type="button" class="zweit" data-neu>Nochmal</button></div></div>
+      </div>
+      <div class="schicht" id="aus" hidden>
+        <div><h3>Ein Käfer hat sich eingeschlichen.</h3><p id="aus-text"></p>
+        <div class="knoepfe"><button type="button" class="laden" data-neu>Nochmal</button><a class="zweit" href="/index.html">Zu den Apps</a></div></div>
+      </div>
+    </div>
+    <div class="anzeige" aria-live="polite"><span id="punkte">Updates: 0 / 20</span><span id="leben">Leben: ●●●</span></div>
+  </section>
+</main>
+<footer class="fuss">
+  <span>© RuToSo</span>
+  <a href="https://rutoso.de">rutoso.de</a>
+  <a href="/index.html">Apps</a>
+  <a href="/neu.html">Neuigkeiten</a>
+  <a href="/anleitung.html">Anleitung</a>
+  <a href="/impressum.html">Impressum</a>
+  <a href="/datenschutz.html">Datenschutz</a>
+  <a href="/nutzungsbedingungen.html">Nutzungsbedingungen</a>
+</footer>
+<script>
+(function(){
+  var cv=document.getElementById('feld'),g=cv.getContext('2d');
+  var W=640,H=480,ZIEL=20,BLAU='#1C5DA6',GELB='#F5C330';
+  var korb,dinge,punkte,leben,laeuft,letzt,bisNeu,tasten={},zielX=null,start;
+  var $=function(id){return document.getElementById(id)};
+
+  function neu(){
+    korb={x:W/2,w:84,h:58};dinge=[];punkte=0;leben=3;bisNeu=0;zielX=null;start=performance.now();
+    ['start','sieg','aus'].forEach(function(s){$(s).hidden=true});
+    anzeige();laeuft=true;letzt=performance.now();requestAnimationFrame(schritt);
+  }
+  function anzeige(){$('punkte').textContent='Updates: '+punkte+' / '+ZIEL;$('leben').textContent='Leben: '+'●'.repeat(leben)+'○'.repeat(3-leben)}
+
+  function rr(x,y,w,h,r,f){g.beginPath();g.roundRect(x,y,w,h,r);g.fillStyle=f;g.fill()}
+  function appKachel(x,y,s){rr(x-s/2,y-s/2,s,s,s*.24,BLAU);rr(x+s*.02,y-s*.36,s*.3,s*.3,s*.08,GELB);rr(x-s*.32,y-s*.02,s*.3,s*.3,s*.08,'#fff')}
+  function kaefer(x,y,s,t){
+    g.strokeStyle='#3a1d12';g.lineWidth=2.5;g.lineCap='round';
+    for(var i=-1;i<=1;i++){var w=Math.sin(t/90+i)*3;g.beginPath();g.moveTo(x-s*.3,y+i*s*.18);g.lineTo(x-s*.55,y+i*s*.26+w);g.moveTo(x+s*.3,y+i*s*.18);g.lineTo(x+s*.55,y+i*s*.26-w);g.stroke()}
+    g.beginPath();g.ellipse(x,y,s*.34,s*.42,0,0,7);g.fillStyle='#C2452D';g.fill();
+    g.beginPath();g.moveTo(x,y-s*.42);g.lineTo(x,y+s*.42);g.strokeStyle='#3a1d12';g.lineWidth=2;g.stroke();
+    g.beginPath();g.arc(x,y-s*.44,s*.16,0,7);g.fillStyle='#3a1d12';g.fill();
+    g.fillStyle='#3a1d12';[[-.15,-.1],[.15,.08],[-.13,.2]].forEach(function(p){g.beginPath();g.arc(x+p[0]*s,y+p[1]*s,s*.06,0,7);g.fill()});
+  }
+  function appstore(x,y,w,h){
+    rr(x-w/2,y-h/2,w,h,14,'#16222E');
+    var s=h*.3,gap=h*.07,x0=x-s-gap/2,y0=y-s-gap/2;
+    rr(x0,y0,s,s,5,'#fff');rr(x0+s+gap,y0,s,s,5,GELB);rr(x0,y0+s+gap,s,s,5,'#fff');rr(x0+s+gap,y0+s+gap,s,s,5,'#fff');
+  }
+
+  function schritt(t){
+    if(!laeuft)return;
+    var dt=Math.min(50,t-letzt)/1000;letzt=t;
+    var tempo=1+punkte/14;
+    // Steuerung
+    var v=0;if(tasten.ArrowLeft||tasten.a)v-=1;if(tasten.ArrowRight||tasten.d)v+=1;
+    if(v){korb.x+=v*520*dt;zielX=null}else if(zielX!==null){korb.x+=(zielX-korb.x)*Math.min(1,dt*14)}
+    korb.x=Math.max(korb.w/2,Math.min(W-korb.w/2,korb.x));
+    // Neues fallen lassen
+    bisNeu-=dt;
+    if(bisNeu<=0){var k=Math.random()<Math.min(.4,.18+punkte*.012);dinge.push({x:30+Math.random()*(W-60),y:-30,s:k?40:36,v:(130+Math.random()*70)*tempo,k:k});bisNeu=Math.max(.38,1.05-punkte*.03)}
+    // Bewegen, fangen
+    var ky=H-44;
+    for(var i=dinge.length-1;i>=0;i--){var d=dinge[i];d.y+=d.v*dt;
+      if(d.y+d.s/2>=ky-korb.h/2&&d.y-d.s/2<=ky+korb.h/2&&Math.abs(d.x-korb.x)<korb.w/2+d.s*.3){
+        dinge.splice(i,1);if(d.k){leben--;blitz=t}else punkte++;anzeige();continue}
+      if(d.y-d.s>H)dinge.splice(i,1)}
+    zeichnen(t);
+    if(punkte>=ZIEL){laeuft=false;$('sieg-text').textContent='Geschafft in '+Math.round((t-start)/1000)+' Sekunden.';$('sieg').hidden=false;$('sieg').querySelector('a').focus();return}
+    if(leben<=0){laeuft=false;$('aus-text').textContent=punkte+' von '+ZIEL+' Updates gefangen.';$('aus').hidden=false;$('aus').querySelector('button').focus();return}
+    requestAnimationFrame(schritt);
+  }
+  var blitz=0;
+  function zeichnen(t){
+    g.clearRect(0,0,W,H);
+    g.fillStyle='#0E2440';g.fillRect(0,0,W,H);
+    // Treppe aus dem Logo, groß und blass im Hintergrund
+    g.globalAlpha=.05;rr(W-150,40,90,90,20,GELB);rr(W-250,140,90,90,20,GELB);rr(W-350,240,90,90,20,GELB);g.globalAlpha=1;
+    g.fillStyle=GELB;g.fillRect(0,H-8,W,8);
+    dinge.forEach(function(d){d.k?kaefer(d.x,d.y,d.s,t):appKachel(d.x,d.y,d.s)});
+    appstore(korb.x,H-44,korb.w,korb.h);
+    if(t-blitz<180){g.fillStyle='rgba(194,69,45,.25)';g.fillRect(0,0,W,H)}
+  }
+
+  function posX(e){var r=cv.getBoundingClientRect();return (e.clientX-r.left)/r.width*W}
+  cv.addEventListener('pointermove',function(e){if(laeuft)zielX=posX(e)});
+  cv.addEventListener('pointerdown',function(e){if(laeuft){zielX=posX(e);cv.setPointerCapture(e.pointerId)}});
+  addEventListener('keydown',function(e){if(!laeuft)return;var k=e.key.length===1?e.key.toLowerCase():e.key;if(['ArrowLeft','ArrowRight','a','d'].indexOf(k)>=0){tasten[k]=true;e.preventDefault()}});
+  addEventListener('keyup',function(e){var k=e.key.length===1?e.key.toLowerCase():e.key;tasten[k]=false});
+  document.addEventListener('visibilitychange',function(){if(document.hidden&&laeuft){laeuft=false;$('start').hidden=false;$('start').querySelector('h3').textContent='Pause';$('los').textContent='Weiter';pausiert=true}});
+  var pausiert=false;
+  $('los').addEventListener('click',function(){if(pausiert){pausiert=false;$('start').hidden=true;laeuft=true;letzt=performance.now();requestAnimationFrame(schritt)}else neu()});
+  document.querySelectorAll('[data-neu]').forEach(function(b){b.addEventListener('click',neu)});
+  if(!g.roundRect){g.roundRect=function(x,y,w,h,r){this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath()}}
+  korb={x:W/2,w:84,h:58};dinge=[];zeichnen(0);
+})();
+</script>
+</body></html>
