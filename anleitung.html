@@ -131,7 +131,7 @@ Erste Version</code></pre>
   </section>
 </main>
 <footer class="fuss">
-  <span>© 2026 RuToSo · Stand: 18.11.2026</span>
+  <span>© <span class="jahr">2026</span> RuToSo<span class="stand" data-datum="2026-11-18"> · Stand: 18.11.2026</span></span>
   <a href="https://rutoso.de">rutoso.de</a>
   <a href="index.html">Apps</a>
   <a href="neu.html">Neuigkeiten</a>
@@ -140,4 +140,5 @@ Erste Version</code></pre>
   <a href="datenschutz.html">Datenschutz</a>
   <a href="nutzungsbedingungen.html">Nutzungsbedingungen</a>
 </footer>
+<script>(function(){var j=new Date().getFullYear();document.querySelectorAll('.jahr').forEach(function(e){e.textContent=j});document.querySelectorAll('.stand').forEach(function(e){if(Date.now()-new Date(e.dataset.datum)>60*864e5)e.hidden=true})})()</script>
 </body></html>

@@ -51,7 +51,7 @@
   </div>
 </main>
 <footer class="fuss">
-  <span>© 2026 RuToSo · Stand: 18.11.2026</span>
+  <span>© <span class="jahr">2026</span> RuToSo<span class="stand" data-datum="2026-11-18"> · Stand: 18.11.2026</span></span>
   <a href="https://rutoso.de">rutoso.de</a>
   <a href="index.html">Apps</a>
   <a href="neu.html">Neuigkeiten</a>
@@ -2378,4 +2378,5 @@ document.getElementById('los').addEventListener('click', () => {
   unter.textContent = (name ? `Für ${name}. ` : '') + 'Im RuToSo-AppStore: Einstellungen › Quellen › QR-Code scannen.';
 });
 </script>
+<script>(function(){var j=new Date().getFullYear();document.querySelectorAll('.jahr').forEach(function(e){e.textContent=j});document.querySelectorAll('.stand').forEach(function(e){if(Date.now()-new Date(e.dataset.datum)>60*864e5)e.hidden=true})})()</script>
 </body></html>
