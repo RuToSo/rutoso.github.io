@@ -9,6 +9,29 @@
   const haupt = document.getElementById('haupt');
   const liste = document.getElementById('liste');
   const hilfe = document.getElementById('installhilfe');
+  // iPhone und iPad (auch iPads, die sich als Mac ausgeben): Apps gibt es nur für Android
+  const apple = /iPhone|iPad|iPod/i.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const nurAndroid = '<span class="laden aus" aria-disabled="true">Nur für Android</span>';
+  const android = /Android/i.test(navigator.userAgent);
+  const pc = !apple && !android;
+
+  // Android-Version des Besuchers (Chrome nennt sie nur über userAgentData, im normalen Text steht immer „Android 10; K“)
+  let androidVersion = null;
+  if (android) {
+    try { if (navigator.userAgentData?.getHighEntropyValues) androidVersion = (await navigator.userAgentData.getHighEntropyValues(['platformVersion'])).platformVersion || null; } catch {}
+    if (!androidVersion && !/Android 10; K\)/.test(navigator.userAgent)) androidVersion = navigator.userAgent.match(/Android (\d+(?:\.\d+)*)/)?.[1] || null;
+  }
+  const zuAlt = min => {
+    if (!androidVersion || !/^\d+(\.\d+)*$/.test(min)) return '';
+    const n = s => s.split('.').map(Number);
+    return vgl(n(androidVersion), n(min)) < 0 ? `<p class="warnung">Braucht Android ${esc(min)} oder neuer. Dein Handy hat Android ${esc(androidVersion)}, die App läuft darauf vermutlich nicht.</p>` : '';
+  };
+
+  // Im Mobilfunknetz bei großen Dateien kurz Bescheid geben (klappt nur in manchen Browsern, z. B. Chrome auf Android)
+  const mobil = navigator.connection?.type === 'cellular';
+  const netz = groesse => mobil && groesse > 5 * 1048576 ? `<p class="netz-hinweis">Du bist gerade im Mobilfunknetz. Die Datei hat ${mb(groesse)}, am besten im WLAN laden.</p>` : '';
+
+  if (apple) haupt.insertAdjacentHTML('beforebegin', '<p class="kasten apple-hinweis">Meine Apps gibt es nur für Android. Auf iPhone und iPad lassen sie sich leider nicht installieren.</p>');
   const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const url = p => p.split('/').map(encodeURIComponent).join('/');
   const text = async p => { if (!p) return ''; try { const r = await fetch(url(p), {cache: 'no-cache'}); return r.ok ? (await r.text()).replace(/^\uFEFF/, '').trim() : ''; } catch { return ''; } };
@@ -70,7 +93,7 @@
     if (!apks.length) return null;
     const datei = n => fs.find(f => f.name.toLowerCase() === n)?.pfad;
     const o = geordnet(letzter(ordner), true);
-    return {name: o.label, rang: o.rang, bereich, bereichRang, seite, apk: apks[0], icon: datei('icon.png'), besch: datei('beschreibung.txt'), neu: datei('neuigkeiten.txt')};
+    return {name: o.label, rang: o.rang, bereich, bereichRang, seite, apk: apks[0], icon: datei('icon.png'), besch: datei('beschreibung.txt'), neu: datei('neuigkeiten.txt'), android: datei('android.txt')};
   }
 
   function seite(wurzel, nr) {
@@ -91,13 +114,18 @@
   const storeOrdner = kinder('').find(o => o.toLowerCase() === STORE.toLowerCase());
   const store = storeOrdner ? app(storeOrdner, 'Start', -1, 1) : null;
   if (store) {
-    const [b, n] = await Promise.all([text(store.besch), text(store.neu)]);
+    const [b, n, min] = await Promise.all([text(store.besch), text(store.neu), text(store.android)]);
+    const datei = esc(url(store.apk.pfad));
     haupt.innerHTML = `${bild(store.icon)}
       <div><h2>${esc(STORE_NAME)}</h2><p>${esc(b)}</p></div>
       <div class="haupt-aktion">
-        <a class="laden" href="${esc(url(store.apk.pfad))}" download>AppStore herunterladen</a>
+        ${pc ? `<div class="qr-feld"><img class="qr" src="assets/qr-apps.svg" alt="QR-Code zu apps.rutoso.de">
+          <div><strong>Mit dem Handy scannen</strong><p>Die Apps sind für Android-Handys. Scanne den Code mit der Kamera, dann öffnet sich diese Seite auf deinem Handy.</p>
+          <a class="pc-laden" href="${datei}" download>Datei trotzdem hier am PC laden</a></div></div>`
+          : apple ? nurAndroid : `<a class="laden" href="${datei}" download>AppStore herunterladen</a>`}
         <span class="version">Version ${esc(store.apk.v.join('.'))}${store.apk.groesse ? ' · ' + mb(store.apk.groesse) : ''}</span>
-        <a href="anleitung.html">So installierst du ihn</a>
+        ${apple || pc ? '' : '<a href="anleitung.html">So installierst du ihn</a>'}
+        ${apple ? '' : zuAlt(min) + netz(store.apk.groesse)}
       </div>
       <div style="grid-column:1/-1">${neu(n)}</div>`;
   } else {
@@ -114,7 +142,7 @@
 
   if (!eindeutig.length) { liste.innerHTML = '<p class="hinweis">Noch keine weiteren Apps veröffentlicht.</p>'; }
   else {
-    const texte = await Promise.all(eindeutig.map(a => Promise.all([text(a.besch), text(a.neu)])));
+    const texte = await Promise.all(eindeutig.map(a => Promise.all([text(a.besch), text(a.neu), text(a.android)])));
     const gName = a => zweite ? `Seite ${a.seite}${a.bereich !== 'Start' ? ' – ' + a.bereich : ''}` : a.bereich;
     const mehrere = new Set(eindeutig.map(gName)).size > 1;
     let html = '', gruppe = '';
@@ -122,10 +150,10 @@
       const g = gName(a);
       if (mehrere && g !== gruppe) html += `<h3 class="gruppe">${esc(g)}</h3>`;
       gruppe = g;
-      const [b, n] = texte[i];
+      const [b, n, min] = texte[i];
       html += `<article class="zeile">${bild(a.icon)}
-        <div class="zeile-text"><h3>${esc(a.name)} <span class="version">${esc(a.apk.v.join('.'))}</span></h3>${b ? `<p>${esc(b)}</p>` : ''}${neu(n)}</div>
-        <a class="laden" href="${esc(url(a.apk.pfad))}" download aria-label="${esc(a.name)} herunterladen">Laden</a>
+        <div class="zeile-text"><h3>${esc(a.name)} <span class="version">${esc(a.apk.v.join('.'))}</span></h3>${b ? `<p>${esc(b)}</p>` : ''}${apple ? '' : zuAlt(min) + netz(a.apk.groesse)}${neu(n)}</div>
+        ${apple ? nurAndroid : `<a class="laden" href="${esc(url(a.apk.pfad))}" download aria-label="${esc(a.name)} herunterladen">Laden</a>`}
       </article>`;
     });
     liste.innerHTML = html;
@@ -133,11 +161,10 @@
 
   // ---------- Nach dem Download: kurze Installationshilfe ----------
   if (hilfe) {
-    const android = /Android/i.test(navigator.userAgent);
     hilfe.querySelector('.nur-android').hidden = !android;
     hilfe.querySelector('.nur-pc').hidden = android;
     document.addEventListener('click', e => {
-      const a = e.target.closest('a.laden');
+      const a = e.target.closest('a.laden, a.pc-laden');
       if (!a) return;
       const name = a.closest('.zeile')?.querySelector('h3')?.firstChild?.textContent?.trim() || STORE_NAME;
       hilfe.querySelector('.app-name').textContent = name;

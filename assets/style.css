@@ -106,3 +106,12 @@ details pre{white-space:pre-wrap;font:inherit;margin:.5rem 0 0;color:var(--text)
 .zur-hauptseite:hover,.zur-hauptseite:focus-visible{opacity:1;background:rgba(255,255,255,.15)}
 .zur-hauptseite ~ .kopf-inhalt{padding-top:3rem}
 @media (max-width:40rem){.zur-hauptseite ~ .kopf-inhalt{padding-top:2.8rem}}
+.laden.aus,.laden.aus:hover{background:var(--flaeche);color:var(--leise);border:1px solid var(--linie);cursor:default}
+.apple-hinweis{margin:0 0 1.25rem}
+.qr-feld{display:flex;gap:1rem;align-items:center;flex-wrap:wrap}
+.haupt img.qr{width:8.5rem;height:8.5rem;border-radius:.5rem;background:#fff;padding:.3rem;border:1px solid var(--linie)}
+.qr-feld p{margin:.25rem 0 .5rem;max-width:26rem}
+.pc-laden{font-size:.9rem}
+.warnung,.netz-hinweis{margin:.35rem 0 0;font-size:.9rem;border-left:3px solid var(--gelb);padding-left:.6rem}
+.haupt-aktion .warnung,.haupt-aktion .netz-hinweis{flex-basis:100%;margin:0}
+.warnung{color:#B42318}

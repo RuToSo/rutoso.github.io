@@ -21,6 +21,7 @@ apps/
 │       ├── beschreibung.txt      (optional)
 │       ├── neuigkeiten.txt       (optional)
 │       ├── mindestversion.txt    (optional, Pflicht-Update)
+│       ├── android.txt           (optional, z. B. 8.0 – ältere Android-Versionen bekommen einen Hinweis)
 │       └── bilder/               (optional)
 ├── 1 Zuhause/                ← Bereich (Tab), Zahl vorn = Reihenfolge
 │   └── 1 Hemstyr/
