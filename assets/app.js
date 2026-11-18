@@ -93,7 +93,7 @@
     if (!apks.length) return null;
     const datei = n => fs.find(f => f.name.toLowerCase() === n)?.pfad;
     const o = geordnet(letzter(ordner), true);
-    return {name: o.label, rang: o.rang, bereich, bereichRang, seite, apk: apks[0], icon: datei('icon.png'), besch: datei('beschreibung.txt'), neu: datei('neuigkeiten.txt'), android: datei('android.txt')};
+    return {name: o.label, rang: o.rang, bereich, bereichRang, seite, apk: apks[0], icon: datei('icon.png'), besch: datei('beschreibung.txt'), neu: datei('neuigkeiten.txt'), android: datei('android.txt'), seiteUrl: datei('index.html') ? url(BASE + '/' + ordner) + '/' : null};
   }
 
   function seite(wurzel, nr) {
@@ -117,7 +117,7 @@
     const [b, n, min] = await Promise.all([text(store.besch), text(store.neu), text(store.android)]);
     const datei = esc(url(store.apk.pfad));
     haupt.innerHTML = `${bild(store.icon)}
-      <div><h2>${esc(STORE_NAME)}</h2><p>${esc(b)}</p></div>
+      <div><h2>${store.seiteUrl ? `<a href="${esc(store.seiteUrl)}">${esc(STORE_NAME)}</a>` : esc(STORE_NAME)}</h2><p>${esc(b)}</p></div>
       <div class="haupt-aktion">
         ${pc ? `<div class="qr-feld"><img class="qr" src="assets/qr-apps.svg" alt="QR-Code zu apps.rutoso.de">
           <div><strong>Mit dem Handy scannen</strong><p>Die Apps sind für Android-Handys. Scanne den Code mit der Kamera, dann öffnet sich diese Seite auf deinem Handy.</p>
@@ -152,7 +152,7 @@
       gruppe = g;
       const [b, n, min] = texte[i];
       html += `<article class="zeile">${bild(a.icon)}
-        <div class="zeile-text"><h3>${esc(a.name)} <span class="version">${esc(a.apk.v.join('.'))}</span></h3>${b ? `<p>${esc(b)}</p>` : ''}${apple ? '' : zuAlt(min) + netz(a.apk.groesse)}${neu(n)}</div>
+        <div class="zeile-text"><h3>${a.seiteUrl ? `<a href="${esc(a.seiteUrl)}">${esc(a.name)}</a>` : esc(a.name)} <span class="version">${esc(a.apk.v.join('.'))}</span></h3>${b ? `<p>${esc(b)}</p>` : ''}${apple ? '' : zuAlt(min) + netz(a.apk.groesse)}${neu(n)}</div>
         ${apple ? nurAndroid : `<a class="laden" href="${esc(url(a.apk.pfad))}" download aria-label="${esc(a.name)} herunterladen">Laden</a>`}
       </article>`;
     });

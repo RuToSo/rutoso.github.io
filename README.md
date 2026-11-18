@@ -22,7 +22,8 @@ apps/
 │       ├── neuigkeiten.txt       (optional)
 │       ├── mindestversion.txt    (optional, Pflicht-Update)
 │       ├── android.txt           (optional, z. B. 8.0 – ältere Android-Versionen bekommen einen Hinweis)
-│       └── bilder/               (optional)
+│       ├── bilder/               (optional, erscheinen auf der App-Seite)
+│       └── index.html            (App-Seite, aus einem anderen App-Ordner kopieren – Inhalt kommt automatisch)
 ├── 1 Zuhause/                ← Bereich (Tab), Zahl vorn = Reihenfolge
 │   └── 1 Hemstyr/
 └── Seite 2/                  ← zweite Seite, darin derselbe Aufbau
@@ -39,3 +40,9 @@ APK mit Versionsnummer in den App-Ordner legen und `neuigkeiten.txt` ergänzen. 
 Ältere APKs nach ein paar Versionen löschen (siehe ANLEITUNG, „Repo klein halten“).
 
 Jede App braucht einen festen Signaturschlüssel, sonst scheitern spätere Updates.
+
+## App-Seite
+
+Jede App mit einer `index.html` im Ordner bekommt eine eigene Seite, z. B. apps.rutoso.de/apps/Main/Norrsken/.
+Die Datei ist überall gleich: einfach aus einem anderen App-Ordner kopieren. Name, Symbol, Beschreibung, Download und Neuigkeiten liest sie selbst aus dem Ordner.
+Kurzadresse auf rutoso.de (z. B. rutoso.de/app/Norrsken) gibt es im Repo rutoso-start im Ordner `app/`.
