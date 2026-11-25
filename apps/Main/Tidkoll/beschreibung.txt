@@ -1,0 +1,9 @@
+Tidkoll – deine Arbeitszeiten, einfach festgehalten.
+
+Ein Tipp auf „Kommen“, einer auf „Gehen“. Deine üblichen Pausen trägst du einmal als Standardpausen ein, Tidkoll bucht sie dann jeden Tag mit Beginn und Ende. Machst du die Pause anders, buchst du sie selbst – dann gilt für diesen Eintrag nur deine eigene.
+
+Vergessene Zeiten trägst du nachträglich ein oder korrigierst sie. Die Übersicht zeigt jeden Monat nach Wochen, auf Wunsch mit deinem Wochensoll. Ist an einem Tag weniger Pause erfasst, als § 4 Arbeitszeitgesetz vorsieht, weist Tidkoll dich darauf hin.
+
+Alles bleibt auf deinem Handy, ohne Konto und ohne Internet. Für Abrechnung oder Ablage exportierst du einen Zeitraum als CSV oder JSON.
+
+Wie die Zeiterfassung in deinem Betrieb aussehen muss, legt dein Arbeitgeber fest. Tidkoll ist ein Hilfsmittel für dich, keine Rechtsberatung.

@@ -1,0 +1,7 @@
+## 1.0.0 – 25.11.2026
+- Neu: Kommen und Gehen per Knopf, laufende Uhr
+- Neu: Standardpausen werden automatisch gebucht, mit Beginn und Ende
+- Neu: Pausen selbst buchen – dann gelten nur die eigenen
+- Neu: Zeiten nachtragen, ändern und löschen
+- Neu: Monatsübersicht nach Wochen mit Wochensoll und Hinweis zu § 4 ArbZG
+- Neu: Export als CSV oder JSON, Sicherung wiederherstellen
